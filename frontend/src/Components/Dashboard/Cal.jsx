@@ -134,7 +134,7 @@ function Cal() {
            
 
               [
-              { title: 'event 1', start: '2023-08-13',end:'2023-08-26'},
+              { title: {data}, start: '2023-08-13',end:'2023-08-26'},
               { title: 'event 2', date: '2023-08-15' }
             ]
             }

@@ -39,4 +39,40 @@ async function getIssues(req,res){
     }
 }
 
-export {createIssue,getIssues};
+async function getIssueByName(req,res){
+  try {
+    let result = await Issue.find({assignee:req.params.assignee});
+    res.status(200).send({result});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+async function getIssuePending(req,res){
+  try {
+    let result = await Issue.find({issue_status:'To Do'});
+    res.status(200).send({result});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+async function getIssueCompleted(req,res){
+  try {
+    let result = await Issue.find({issue_status:'Done'});
+    res.status(200).send({result});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+async function getIssueProgress(req,res){
+  try {
+    let result = await Issue.find({issue_status:'In-progress'});
+    res.status(200).send({result});
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+export {createIssue,getIssues,getIssueCompleted,getIssuePending,getIssueProgress,getIssueByName};

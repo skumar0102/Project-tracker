@@ -207,8 +207,7 @@ sx={{ display: "flex" }}>
           style={{marginBottom:'20px'}}
         >
       {Team.map((el,index)=>(
-
-          <MenuItem style={{minWidth: 400 }} value={el.first_name}>{el.first_name.toUpperCase()}&nbsp;{el.last_name.toUpperCase()}</MenuItem>
+          <MenuItem style={{minWidth: 400 }} key={index} value={el.first_name}>{el.first_name.toUpperCase()}&nbsp;{el.last_name.toUpperCase()}</MenuItem>
       ))}
         </Select>
         {errors.assignee && touched.assignee ? (

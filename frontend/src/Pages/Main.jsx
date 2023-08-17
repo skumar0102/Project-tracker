@@ -15,7 +15,7 @@ import SignIn from './SignIn.jsx';
 import Slider from './Slider.js';
 import Navbar from '../Components/Layout/Navbar.jsx';
 const init1 = { loginemail: '', loginpassword: '' }
-const init2 = { first_name: '', last_name: '', email: '', password: '' }
+const init2 = { employee_code:'', first_name: '', last_name: '', email: '', password: '', role: '' }
 
 function Main() {
     const [signIn, toggle] = useState(true);

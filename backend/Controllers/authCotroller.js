@@ -12,7 +12,7 @@ try {
    if(!authResult) return res.status(401).send('Incorrect password');
 
 //    let userverify = await User.findOne({'isVerified':true});
-//    if(!userverify) return res.status(401).send('This Account not Verfified');
+//    if(!userverify) return res.status(401).send('This Account was not Verfified');
    
    let token = jwt.sign({
        first_name : result.first_name,

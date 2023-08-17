@@ -8,9 +8,15 @@ import Team from './Components/Dashboard/Team';
 import ViewUsers from './Components/Dashboard/ViewUsers';
 import ViewManager from './Components/Dashboard/ViewManager';
 import ViewProject from './Components/Dashboard/ViewProject';
+import ViewPendingTasks from './Components/Dashboard/ViewPendingTasks';
+import ViewCompletedTasks from './Components/Dashboard/ViewCompletedTasks';
+import ViewInprogressTasks from './Components/Dashboard/ViewInprogressTasks';
 import Tasks from './Components/Dashboard/Tasks';
 import CreateTeam from './Components/Dashboard/CreateTeam';
 import CreateProject from './Components/Dashboard/CreateProject';
+import FAQ from './Components/Dashboard/FAQ';
+import PieChart from './Components/Dashboard/PieChart';
+import TopValues from './Components/Dashboard/TopValues';
 import './App.css';
 function App() {
   return (
@@ -20,14 +26,20 @@ function App() {
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/createissue" element={<CreateIssue/>} />
       <Route path="/cal" element={<Cal/>} />
+      <Route path="/faq" element={<FAQ/>} />
       <Route path="/profile" element={<Profile/>} />
       <Route path="/team" element={<Team/>} />
       <Route path="/viewusers" element={<ViewUsers/>} />
       <Route path="/viewmanager" element={<ViewManager/>} />
       <Route path="/viewproject" element={<ViewProject/>} />
+      <Route path="/viewpendingtasks" element={<ViewPendingTasks/>} />
+      <Route path="/viewcompletedtasks" element={<ViewCompletedTasks/>} />
+      <Route path="/viewInprogresstasks" element={<ViewInprogressTasks/>} />
       <Route path="/tasks" element={<Tasks/>} />
       <Route path="/createteam" element={<CreateTeam/>} />
       <Route path="/createproject" element={<CreateProject/>} />
+      <Route path="/chart" element={<PieChart/>} />
+      <Route path="/value" element={<TopValues/>} />
 
      </Routes>
     </div>

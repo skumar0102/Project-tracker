@@ -18,27 +18,20 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import logo from "../../assets/logo.gif";
 import { http } from "../../Config/axiosConfig.js";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
   HomeOutlined,
-  PeopleAltOutlined,
   ReceiptOutlined,
-  CalendarViewMonthRounded,
   HelpOutlineOutlined,
-  MenuOutlined,
   CreateOutlined,
   LogoutOutlined,
   AccountBoxOutlined,
   TaskAltOutlined,
-  DoneOutline,
-  WorkOutline,
-  AssignmentOutlined,
-  GraphicEqOutlined,
 } from "@mui/icons-material";
+import PendingIcon from "@mui/icons-material/Pending";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {Linkstyle} from '../Style/MuiStyle.js'
+import { Linkstyle } from "../Style/MuiStyle.js";
 
 const drawerWidth = 240;
 
@@ -88,9 +81,10 @@ function SideandNavbar() {
       <HomeOutlined />,
       <ReceiptOutlined />,
       <AccountBoxOutlined />,
-      <CreateOutlined />,
-      <PeopleAltOutlined />,
+      <VisibilityIcon />,
+      <VisibilityIcon />,
       <TaskAltOutlined />,
+      <PendingIcon />,
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
@@ -101,6 +95,7 @@ function SideandNavbar() {
       <CreateOutlined />,
       <CreateOutlined />,
       <CreateOutlined />,
+      <VisibilityIcon />,
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
@@ -109,6 +104,13 @@ function SideandNavbar() {
       <ReceiptOutlined />,
       <AccountBoxOutlined />,
       <CreateOutlined />,
+      <CreateOutlined />,
+      <CreateOutlined />,
+      <CreateOutlined />,
+      <TaskAltOutlined />,
+      <PendingIcon />,
+      <VisibilityIcon />,
+      <VisibilityIcon />,
       <VisibilityIcon />,
       <VisibilityIcon />,
       <VisibilityIcon />,
@@ -140,10 +142,11 @@ function SideandNavbar() {
       { field: "Home", value: false, component: "/dashboard" },
       { field: "Profile", value: false, component: "/profile" },
       { field: "Account", value: false, component: "/" },
-      { field: "Create Issue", value: false, component: "/createissue" },
-      { field: "Team", value: false, component: "/team" },
-      { field: "Task Type", value: false, component: "/tasks" },
-      { field: "FAQ", value: false, component: "/" },
+      { field: "View Team Members", value: false, component: "/team" },
+      { field: "View Tasks", value: false, component: "/tasks" },
+      { field: "Completed Tasks", value: false, component: "/tasks" },
+      { field: "Pending Tasks", value: false, component: "/tasks" },
+      { field: "FAQ", value: false, component: "/faq" },
       { field: "Sign Out", value: false, component: () => handleLogout() },
     ],
     Manager: [
@@ -153,18 +156,30 @@ function SideandNavbar() {
       { field: "Create Issue", value: false, component: "/createissue" },
       { field: "Create Project", value: false, component: "/createproject" },
       { field: "Create Team Member", value: false, component: "/createteam" },
-      { field: "FAQ", value: false, component: "/" },
+      { field: "View Tasks", value: false, component: "/tasks" },
+      { field: "FAQ", value: false, component: "/faq" },
       { field: "Sign Out", value: false, component: () => handleLogout() },
     ],
     Admin: [
       { field: "Home", value: false, component: "/dashboard" },
       { field: "Profile", value: false, component: "/profile" },
       { field: "Account", value: false, component: "/" },
+      { field: "Create Issue", value: false, component: "/createissue" },
+      { field: "Create Project", value: false, component: "/createproject" },
+      { field: "Create Team Member", value: false, component: "/createteam" },
       { field: "Create User", value: false, component: "/" },
+      {
+        field: "Completed Tasks",
+        value: false,
+        component: "/viewcompletedtasks",
+      },
+      { field: "Pending Tasks", value: false, component: "/viewpendingtasks" },
       { field: "View Users", value: false, component: "/viewusers" },
-      { field: "View Managers", value: false, component: "/viewmanager" },
+      { field: "View Issues", value: false, component: "/tasks" },
       { field: "View Projects", value: false, component: "/viewproject" },
-      { field: "FAQ", value: false, component: "/" },
+      { field: "View Team Members", value: false, component: "/team" },
+      { field: "View Managers", value: false, component: "/viewmanager" },
+      { field: "FAQ", value: false, component: "/faq" },
       { field: "Sign Out", value: false, component: () => handleLogout() },
     ],
   };
@@ -188,7 +203,7 @@ function SideandNavbar() {
           {menu.map((el, index) => {
             return (
               // <ListItemButton onClick={firstNavigation.Manager[7].component}>
-              <ListItemButton >
+              <ListItemButton>
                 <ListItemIcon>{icons.Manager[index]}</ListItemIcon>
                 <Linkstyle to={firstNavigation.Manager[index].component}>
                   <ListItemText primary={el} />
@@ -248,7 +263,9 @@ function SideandNavbar() {
           </Typography>
           <Button variant="contained" color="error" onClick={handleLogout}>
             SignOut
-          </Button>
+          </Button>{" "}
+          &nbsp;&nbsp;
+          {/* {Date()} */}
         </Toolbar>
       </AppBar>
       <Drawer

@@ -11,9 +11,11 @@ export const SigninValidation = Yup.object({
 
 export const SignUpValidation = Yup.object({
 
+    employee_code:Yup.string().max(10).required('* Please enter Employee Code'),
     first_name:Yup.string().max(100).required('* Please enter First Name'),
     last_name:Yup.string().max(100).required('* Please enter Last Name'),
     email:Yup.string().max(100).required('* Please enter your email'),
-    password:Yup.string().max(100).required('* Please enter your password')
+    password:Yup.string().max(100).required('* Please enter your password'),
+    role:Yup.string().max(100).required('* Please choose Role')
     
 })

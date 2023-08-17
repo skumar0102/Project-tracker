@@ -12,11 +12,10 @@ import SideandNavbar from './SideandNavbar';
 import { http } from '../../Config/axiosConfig.js';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
 
-function Tasks() {
+function ViewInprogressTasks() {
     const [Tasks, setTasks] = useState([]);
-    console.log(localStorage.getItem('first_name'))
     useEffect(() => {
-        http.get(`/issue`)
+        http.get(`/issue/progress`)
           .then((res) => {
             setTasks(res.data.result);
           })
@@ -24,6 +23,7 @@ function Tasks() {
             console.log(err.messsage);
           });
       }, []);
+
   return (
     <Box sx={{ display: "flex" ,margin:0,width:"100wh"}}>
       
@@ -84,4 +84,4 @@ function Tasks() {
   )
 }
 
-export default Tasks
+export default ViewInprogressTasks

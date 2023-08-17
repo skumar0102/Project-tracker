@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 async function createUser(req, res) {
   try {
     let {
+      employee_code,
       first_name,
       last_name,
       email,
@@ -18,6 +19,7 @@ async function createUser(req, res) {
     let hash = await bcrypt.hash(password, salt);
     let token = jwt.sign(
       {
+        employee_code,
         first_name,
         last_name,
         email,
@@ -30,6 +32,7 @@ async function createUser(req, res) {
     );
 
     let result = await User.create({
+      employee_code,
       first_name,
       last_name,
       email,
@@ -41,6 +44,7 @@ async function createUser(req, res) {
       .send({
         success: true,
         result: {
+          employee_code : result.employee_code,
           first_name: result.first_name,
           last_name: result.last_name,
           email: result.email,
@@ -145,7 +149,7 @@ async function deleteUser(req, res) {
 
 async function forgotpassword(req, res) {
   try {
-    let emailUser = await User.findOne({email:req.body.email});
+    let emailUser = await User.findOne({'email':req.body.email});
     if(!emailUser) return res.status(400).send('User not found');
 
     let result = await User.findOneAndUpdate({

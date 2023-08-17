@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { date } from "yup";
+
 
 const IssueSchema = new mongoose.Schema({
     project_code: {type:String},

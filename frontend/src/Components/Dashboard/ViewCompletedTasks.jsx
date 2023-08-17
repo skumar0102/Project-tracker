@@ -12,11 +12,10 @@ import SideandNavbar from './SideandNavbar';
 import { http } from '../../Config/axiosConfig.js';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
 
-function Tasks() {
+function ViewCompletedTasks() {
     const [Tasks, setTasks] = useState([]);
-    console.log(localStorage.getItem('first_name'))
     useEffect(() => {
-        http.get(`/issue`)
+        http.get(`/issue/completed`)
           .then((res) => {
             setTasks(res.data.result);
           })
@@ -84,4 +83,4 @@ function Tasks() {
   )
 }
 
-export default Tasks
+export default ViewCompletedTasks

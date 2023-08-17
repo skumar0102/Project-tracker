@@ -10,6 +10,7 @@ import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 import SideAndNavbar from "./SideandNavbar";
 import FAQ from "./FAQ";
+import TopValues from "./TopValues";
 
 function index() {
 
@@ -28,20 +29,20 @@ function index() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={8} lg={9}>
                 {/* <Paper sx={{p:2,display:'flex',flexDirection:'column',height:250}}> */}
-                  <FAQ/>
+                  <TopValues/>
                 {/* </Paper> */}
               </Grid>
               <Grid item xs={12} md={8} lg={12}>
-                <Paper sx={{p:2,display:'flex',flexDirection:'column',height:310}}>
+                {/* <Paper sx={{p:2,display:'flex',flexDirection:'column',height:310}}> */}
                   {/* <Orders/> */}
-                </Paper>
+                {/* </Paper> */}
               </Grid>
               <Grid item xs={12}>
-             hello
+             {/* hello */}
               </Grid>
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
