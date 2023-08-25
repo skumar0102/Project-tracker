@@ -7,12 +7,39 @@ import { useFormik } from 'formik';
 import { http } from '../../Config/axiosConfig.js';
 import {IssueValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
-import Swal from 'sweetalert2';
+import { message } from 'antd';
+import {useParams,useNavigate} from 'react-router-dom';
+import Back from '../../assets/bg1.jpg';
+import { UploadOutlined } from '@ant-design/icons';
+import {  Upload } from 'antd';
+
+const props = {
+  name: 'file',
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  headers: {
+    authorization: 'authorization-text',
+  },
+  onChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
+};
 
 function CreateIssue() {
+const ID = useParams().id;
+const [type, setType] = useState("create");
 const [Projects, setProjects] = useState([]);
 const [Team, setTeam] = useState([]);
-
+const [refresh, setRefresh] = useState();
+const navigate = useNavigate();
+const [getassignee, setGetassignee] = useState([]);
+console.log(getassignee)
 const formik = useFormik({
   validationSchema:IssueValidation,
   initialValues : {
@@ -25,32 +52,38 @@ const formik = useFormik({
     starting_date:"",
     ending_date:"",
     reporter:"",
+    email:"",
+    createdby:""
   },
   onSubmit:(values)=>{
-    console.log("values",values);
+  if(type === "create"){
     http.post("/issue",values).then((res)=>{
       if(res.status === 201){
-        Swal.fire({
-          toast: true,
-          position: 'bottom-end',
-          icon: 'success',
-          background:'#4aa3d1',
-          title: 'Issue create successfully Done !',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-      })
+        message.config({top:100})
+        message.success('Issue create successfully Done !');   
       }
+      formik.resetForm();
     })
-
   }
+  else if (type === "Edit"){
+    http.put(`/issue/${ID}`,values).then((res)=>{
+      if(res.status === 200){
+        message.config({top:100})
+        message.success('Issue Updated successfully Done !'); 
+      }
+      formik.resetForm();
+      navigate('/tasks');
+
+    })
+  }
+}
 })
-const { handleChange, values, handleSubmit, handleBlur, errors, touched } =
+
+
+
+const { handleChange, values, handleSubmit, handleBlur, errors, touched,resetForm } =
 formik;
+
 
   useEffect(() => {
     http.get(`/project`)
@@ -69,24 +102,38 @@ formik;
       .catch((err) => {
         console.log(err.messsage);
       });
-  }, []);
+
+      
+
+      http.get(`/issue/${ID}`)
+      .then((res) =>{
+       setType("Edit");
+       formik.setFieldValue("project_code",res.data.project_code);
+       formik.setFieldValue("issue_type",res.data.issue_type);
+       formik.setFieldValue("issue_status",res.data.issue_status);
+       formik.setFieldValue("summary",res.data.summary);
+       formik.setFieldValue("description",res.data.description);
+       formik.setFieldValue("assignee",res.data.assignee);
+       formik.setFieldValue("starting_date",res.data.starting_date);
+       formik.setFieldValue("ending_date",res.data.ending_date);
+       formik.setFieldValue("reporter",res.data.reporter);
+       formik.setFieldValue("email",res.data.email);
+       formik.setFieldValue("createdby",res.data.createdby);
+      }).catch((err) => console.log(err.message))
+  }, [refresh]);
 
 
   return (
     <>
 <FormGroup onSubmit={handleSubmit} >
-
-
-<Box 
-          component="form"
-
-sx={{ display: "flex" }}>
+<Box component="form"
+sx={{ display: "flex",color:'black' }}>
       <CssBaseline />
     <SideandNavbar/>
       <Box
           component="main"
           sx={{
-            
+            // backgroundImage : `url(${Back})`,
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
@@ -100,11 +147,12 @@ sx={{ display: "flex" }}>
           <div style={{maxwidth:1800,
           height:'100%',
           // backgroundColor: '#e565654d',
-          backgroundColor: 'white',
+          // backgroundColor: 'white',
           borderRadius:'20px',
           padding:'20px'}}>
 
-          <h1 style={{margin:0}}>Create Issue</h1>
+          <h1 style={{margin:0}}>{type === "Edit" ? "Update" : "Create"} Issue</h1>
+          {/* <h1 style={{margin:0}}>Create Issue</h1> */}
           <hr/>
           <FormControl  sx={{ ml: 1, minWidth: 400 }}>
         <InputLabel id="demo-simple-select-autowidth-label" >Project *</InputLabel>
@@ -160,6 +208,21 @@ sx={{ display: "flex" }}>
 
         <FormControl sx={{ ml: 1, minWidth: 400 }}>
         <InputLabel id="demo-simple-select-autowidth-label" >Status *</InputLabel>
+        {type === "create" ? 
+        <>
+          <Select
+          labelId="demo-simple-select-autowidth-label"
+          name='issue_status'
+          autoWidth
+          label="Status *"
+          value={values.issue_status}
+          onChange={handleChange}
+        >
+          <MenuItem style={{minWidth: 400 }} value="To Do" >To Do</MenuItem>
+        </Select>
+        </>
+        :
+        <>
         <Select
           labelId="demo-simple-select-autowidth-label"
           name='issue_status'
@@ -168,11 +231,20 @@ sx={{ display: "flex" }}>
           value={values.issue_status}
           onChange={handleChange}
         >
-      
+          
           <MenuItem style={{minWidth: 400 }} value="To Do" >To Do</MenuItem>
-          <MenuItem value="In-progress">In-progress</MenuItem>
-          <MenuItem value="Done" >Done</MenuItem>
+          <MenuItem value="In-progress">Development</MenuItem>
+          <MenuItem value="SIT">SIT</MenuItem>
+          <MenuItem value="QA">QA</MenuItem>
+          <MenuItem value="UAT">UAT</MenuItem>
+          <MenuItem value="Feasibility Analysis">Feasibility Analysis</MenuItem>
+          <MenuItem value="Ready to release">Ready to release</MenuItem>
+          <MenuItem value="Released">Released</MenuItem>
+          <MenuItem value="Done">Complete</MenuItem>        
         </Select>
+        </>
+        }
+        
         {errors.issue_status && touched.issue_status ? (
                 <Typography  style={{ color: "red" }}>
                   {errors.issue_status}
@@ -195,7 +267,9 @@ sx={{ display: "flex" }}>
                 </Typography>
               ) : null}
 <br/>
-        <FormControl sx={{ mt:2,ml: 1, minWidth: 400 }}>
+          <Grid>
+        <FormControl sx={{ mt:2,ml: 1, minWidth: '45%' }}>
+
         <InputLabel id="demo-simple-select-autowidth-label" >Assignee *</InputLabel>
         <Select
           labelId="demo-simple-select-autowidth-label"
@@ -207,7 +281,7 @@ sx={{ display: "flex" }}>
           style={{marginBottom:'20px'}}
         >
       {Team.map((el,index)=>(
-          <MenuItem style={{minWidth: 400 }} key={index} value={el.first_name}>{el.first_name.toUpperCase()}&nbsp;{el.last_name.toUpperCase()}</MenuItem>
+          <MenuItem style={{minWidth: 400 }} key={index} value={el.id}>{el.first_name.toUpperCase()}&nbsp;{el.last_name.toUpperCase()}</MenuItem>
       ))}
         </Select>
         {errors.assignee && touched.assignee ? (
@@ -215,8 +289,35 @@ sx={{ display: "flex" }}>
                   {errors.assignee}
                 </Typography>
               ) : null}
+
         </FormControl> 
+
+        <FormControl sx={{ mt:2,ml: 1, minWidth: '45%' }}>
+
+<InputLabel id="demo-simple-select-autowidth-label" >Email *</InputLabel>
+<Select
+  labelId="demo-simple-select-autowidth-label"
+  name='email'
+  autoWidth
+  label="Email *"  
+  value={values.email}
+  onChange={handleChange}
+  style={{marginBottom:'20px'}}
+>
+{Team.map((el,index)=>(
+  <MenuItem style={{minWidth: 400 }} key={index} value={el.email}>{el.email}</MenuItem>
+))}
+</Select>
+{errors.email && touched.email ? (
+        <Typography  style={{ color: "red" }}>
+          {errors.email}
+        </Typography>
+      ) : null}
+
+</FormControl>
+          </Grid>
         <br/>
+        
             <Grid>
         <InputLabel sx={{ml: 1}} id="demo-simple-select-autowidth-label" >Starting Date & Ending Date *</InputLabel>
 
@@ -240,8 +341,24 @@ sx={{ display: "flex" }}>
                   {errors.reporter}
                 </Typography>
               ) : null}
-              <br/><br/>
-        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff',ml:1 }} >Create</Button>
+              <br/>
+              <br/>
+        <TextField sx={{width: '1000px',ml: 1}} label='Created By'  value={values.createdby} name='createdby' type='text' onBlur={handleBlur} onChange={handleChange}  />
+        {errors.createdby && touched.createdby ? (
+                <Typography  style={{ color: "red" }}>
+                  {errors.createdby}
+                </Typography>
+              ) : null}
+              <br/>
+              <br/>
+              <Upload {...props}>
+    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+  </Upload>
+              <br/>
+              <br/>
+        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff',ml:1 }} >{type === "Edit" ? "Update" : "Create"}
+        {/* <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff',ml:1 }} >Create */}
+</Button>
         
      
           </div>
@@ -249,9 +366,13 @@ sx={{ display: "flex" }}>
           </Grid>
           </Container>
           </Box>
+   
           </Box>
-          
+         
 </FormGroup>
+
+
+
         
     </>
   )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import Box from '@mui/joy/Box';
 import {Container,Grid,CssBaseline,TextField,InputLabel,MenuItem,Select,FormControl,Button,Typography} from '@mui/material';
 import SideandNavbar from './SideandNavbar';
@@ -7,39 +7,60 @@ import {ProjectValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
 import { http } from '../../Config/axiosConfig.js';
 import Swal from 'sweetalert2';
+import { message } from 'antd';
+import {useParams,useNavigate} from 'react-router-dom';
+import Back from '../../assets/bg1.jpg';
+
 function CreateProject() {
+  const ID = useParams().id;
+  const [type, setType] = useState("create");
+  const [refresh, setRefresh] = useState()
+  const navigate = useNavigate();
     const formik = useFormik({
         validationSchema:ProjectValidation,
         initialValues : {
           project_name:"",
-          project_code:"",
           description:"",
-          phone:"",
+          email:"",
           date_of_creation:"",
           project_type:""
         },
         onSubmit:(values)=>{
-          http.post("/project",values).then((res)=>{
-            if(res.status === 201){
-              Swal.fire({
-                toast: true,
-                position: 'bottom-end',
-                icon: 'success',
-                background:'#4aa3d1',
-                title: 'Project created successfully Done !',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+          if(type === "create"){
+            http.post("/project",values).then((res)=>{
+              if(res.status === 201){
+                message.config({top:100})
+                message.success('Project created successfully Done !');   
+              }
+              formik.resetForm();
             })
-            }
-          })
+          } else if (type === "Edit"){
+            http.put(`/project/${ID}`,values).then((res)=>{
+              if(res.status === 200){
+                message.config({top:100})
+                message.success('Issue Updated successfully Done !'); 
+              }
+              formik.resetForm();
+            navigate('/viewproject');
+            })
+          }
         }
     
       })
+      
+      useEffect(() => {
+        http.get(`/project/${ID}`)
+        .then((res) =>{
+         setType("Edit");
+         formik.setFieldValue("project_name",res.data.project_name);
+         formik.setFieldValue("description",res.data.description);
+         formik.setFieldValue("summary",res.data.summary);
+         formik.setFieldValue("email",res.data.email);
+         formik.setFieldValue("date_of_creation",res.data.date_of_creation);
+         formik.setFieldValue("project_type",res.data.project_type);
+        }).catch((err) => console.log(err.message))
+      }, [refresh])
+      
     
       const { handleChange, values, handleSubmit, handleBlur, errors, touched } =
     formik;
@@ -51,23 +72,22 @@ function CreateProject() {
     <Box
         component="main"
         sx={{
-          
+          backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
           
         }}
       >
-        <Container maxWidth="lg"  sx={{ mt: 10, mb: 4,ml:0 }}>
+        <Container maxWidth="lg"  sx={{ mt: 10, mb: 4 }}>
           <Grid container sx={{display:'flex',padding:2}}  columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <div style={{width:"100%"}}>
-            <h1>Create New Project</h1>
+            <h1>{type === "Edit" ? "Update" : "Create New"} Project</h1>
             <hr/>
-            <Grid >
+            
 
-            <TextField style={{width:"45%"}} variant='outlined' label='Project Name *' color='secondary' name="project_name" value={values.project_name} onBlur={handleBlur} onChange={handleChange}  />&nbsp;&nbsp;&nbsp;&nbsp;            
-            <TextField style={{width:"45%"}} variant='outlined' label='Project Code *' color='secondary' name="project_code" value={values.project_code} onBlur={handleBlur} onChange={handleChange}  />
-            </Grid>
+            <TextField style={{width:"91.5%"}} variant='outlined' label='Project Name *' color='secondary' name="project_name" value={values.project_name} onBlur={handleBlur} onChange={handleChange}  />&nbsp;&nbsp;&nbsp;&nbsp;            
+           <br/>
             {errors.project_name && touched.project_name ? (
                 <Typography  style={{ color: "red" }}>
                   {errors.project_name}
@@ -89,10 +109,10 @@ function CreateProject() {
             </Grid>
             <br/>
             <Grid >
-            <TextField style={{width:"91.5%"}} variant='outlined' label='Phone  Number *' color='secondary' name="phone" value={values.phone} onBlur={handleBlur} onChange={handleChange}  />
-            {errors.phone && touched.phone ? (
+            <TextField style={{width:"91.5%"}} variant='outlined' label='Email Id *' color='secondary' name="email" value={values.email} onBlur={handleBlur} onChange={handleChange}  />
+            {errors.email && touched.email ? (
                 <Typography  style={{ color: "red" }}>
-                  {errors.phone}
+                  {errors.email}
                 </Typography>
               ) : null}
             </Grid>
@@ -132,7 +152,7 @@ function CreateProject() {
         </FormControl>
             </Grid>
             <br/>
-        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff',ml:1 }} >Create Project +</Button>
+        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} >{type === "Edit" ? "Update Project" : "Create Project +"}</Button>
 
             </div>
           </Grid>

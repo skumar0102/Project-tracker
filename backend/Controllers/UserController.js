@@ -131,7 +131,7 @@ async function getUserById(req, res) {
 
 async function updateUser(req, res) {
   try {
-    let result = await User.findOneAndUpdate({ _id: req.body._id }, req.body);
+    let result = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
     res.status(200).send("Employee Updated Successfully !");
   } catch (error) {
     res.status(400).send(error.message);
@@ -154,8 +154,7 @@ async function forgotpassword(req, res) {
 
     let result = await User.findOneAndUpdate({
       email: emailUser,
-      password: req.body.password,
-    });
+      },{password: req.body.password});
     res.status(200).send({ success: true, result,message:"Updated" });
   } catch (error) {
     res.status(400).send(error.message);

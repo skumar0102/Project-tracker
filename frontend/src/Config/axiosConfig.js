@@ -7,4 +7,11 @@ const http = axios.create({
     }
 })
 
-export {http};
+const httpFile = axios.create({
+    baseURL : "http://localhost:4546",
+    headers : {
+        "Content-Type":"multipart/form-data"
+    }
+})
+
+export {http,httpFile};

@@ -1,43 +1,66 @@
-import * as React from 'react';
-import AspectRatio from '@mui/joy/AspectRatio';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
-import Typography from '@mui/joy/Typography';
-import BadgeIcon from '@mui/icons-material/Badge';
-
+import  React,{useState,useEffect} from 'react';
+import { Col, Row,Progress, Space } from 'antd';
+import { AntCard } from '../Style/MuiStyle';
+import { http } from '../../Config/axiosConfig';
+import {ProjectTwoTone} from '@ant-design/icons';
 function TopValues() {
+  const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    http.get(`/project`)
+      .then((res) => {
+        setProjects((res.data.result).length);
+      })
+      .catch((err) => {
+        console.log(err.messsage);
+      });
+
+    http.get(`/team`)
+      .then((res) => {
+        setUsers((res.data.result).length);
+      })
+      .catch((err) => {
+        console.log(err.messsage);
+      });
+  }, []);
+  
   return (
-    <Card orientation="horizontal" variant="outlined" sx={{ width: 400 }}>
-    <CardOverflow>
-      <AspectRatio ratio="1" sx={{ width: 150 }}>
-        <BadgeIcon/>
-      </AspectRatio>
-    </CardOverflow>
-    <CardContent>
-      <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
-        Total Employee
-      </Typography>
-      <Typography level="body-sm">100</Typography>
-    </CardContent>
-    <CardOverflow
-      variant="soft"
-      color="primary"
-      sx={{
-        px: 0.2,
-        writingMode: 'vertical-rl',
-        textAlign: 'center',
-        fontSize: 'xs',
-        fontWeight: 'xl',
-        letterSpacing: '1px',
-        textTransform: 'uppercase',
-        borderLeft: '1px solid',
-        borderColor: 'divider',
-      }}
-    >
-      IDS INFOTECH LTD.
-    </CardOverflow>
-  </Card>
+    <>
+    <Row gutter={16}>
+    <Col span={6}>
+      <AntCard title="Total Projects" bordered={false}>
+        {projects}  
+      </AntCard>
+    </Col>
+    <Col span={6}>
+      <AntCard title="Total Employees" bordered={false}>
+        {users}
+      </AntCard>
+    </Col>
+    <Col span={6}>
+      <AntCard title="Completed Projects" bordered={false}>
+        0
+      </AntCard>
+    </Col>
+    <Col span={6}>
+      <AntCard title="Pending Projects" bordered={false}>
+       1
+      </AntCard>
+    </Col>
+    {/* <Col span={6}>
+      <AntCard title="Pending Projects" bordered={false}>
+        Card content
+      </AntCard>
+    </Col> */}
+  </Row>
+  <br/>
+  <hr/>
+  </>
+
+ 
+
+ 
   )
 }
 

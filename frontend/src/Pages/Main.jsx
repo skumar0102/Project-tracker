@@ -34,6 +34,7 @@ function Main() {
                                     localStorage.setItem('email',res.data.result.email);
                                     localStorage.setItem('role',res.data.result.role);
                                     localStorage.setItem('first_name',res.data.result.first_name);
+                                    localStorage.setItem('Created_by',res.data.result.employee_code);
                                     Swal.fire({
                                         toast: true,
                                         position: 'bottom-end',

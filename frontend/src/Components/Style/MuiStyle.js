@@ -2,7 +2,13 @@ import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { Card } from 'antd';
 
+export const AntCard = styled(Card)({
+  backgroundColor:'lightblue',
+  // height:'200px',
+  fontSize:'2rem',
+})
 
 export const Linkstyle = styled(Link)({
     textDecoration:'none',

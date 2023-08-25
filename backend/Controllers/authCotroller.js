@@ -20,12 +20,10 @@ try {
        email : result.email,
        role : result.role,
        isVerified : result.isVerified,
+       employee_code : result.employee_code,
        expiresIn :60
    },
-   process.env.JWT_SECRET_KEY,
-   )
-
-   
+   process.env.JWT_SECRET_KEY)     
    res.status(200).send({success:true, token,result});
 } catch (error) {
     res.status(400).send(error.message);
@@ -58,6 +56,20 @@ async function verify(req,res){
     }
 }
 
+async function authLogin(req,res){
+    try {
+        let {token} = req.query;
+        let decodedInfo = jwt.verify(token,process.env.JWT_SECRET_KEY);
+        let user = await User.findOne({
+            email : decodedInfo.email
+        })
+        res.status(200).send("Successfully Authenticate !");
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 async function logout(req,res){
     try {
         console.log("Hello my logout page");
@@ -68,4 +80,4 @@ async function logout(req,res){
 }
 
 
-export  {Login,verify,logout};
+export  {Login,verify,logout,authLogin};

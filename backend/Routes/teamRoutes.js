@@ -1,10 +1,12 @@
 import express from "express";
-import {createTeam,getTeam} from '../Controllers/TeamController.js';
-
+import {createTeam,getTeam,deleteTeam,getTeamById,updateTeam} from '../Controllers/TeamController.js';
+import upload from "../Config/multerConfig.js";
 const router = express.Router();
 
-router.post('/',createTeam);
+router.post('/',upload.single('images'),createTeam);
 router.get('/',getTeam);
-
+router.get('/:id',getTeamById);
+router.delete('/:id',deleteTeam);
+router.put('/:id',updateTeam)
 export default router;
 

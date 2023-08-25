@@ -16,6 +16,7 @@ router.get("/:id",getUserById);
 // router.put("/:id",updateUser);
 router.delete("/:id",deleteUser);
 router.put("/forgotpassword",forgotpassword);
+router.put("/:id",updateUser);
 
 
 export default router;

@@ -1,13 +1,14 @@
 import express from 'express';
-import  {createIssue,getIssues,getIssueCompleted,getIssuePending,getIssueProgress,getIssueByName} from '../Controllers/IssueController.js';
+import  {createIssue,getIssues,getIssueByEmail,deleteissue,getIssueById,updateIssue,getIssueByCode} from '../Controllers/IssueController.js';
 
 const router = express.Router();
 
 router.post('/',createIssue);
+router.get('/:id',getIssueById);
+router.put('/:id',updateIssue);
+router.get('/createdby/:createdby',getIssueByCode);
+router.get('/assignee/:email',getIssueByEmail);
 router.get('/',getIssues);
-router.get('/completed',getIssueCompleted);
-router.get('/pending',getIssuePending);
-router.get('/progress',getIssueProgress);
-router.get('/:assignee',getIssueByName);
+router.delete('/:id',deleteissue);
 
 export default router;

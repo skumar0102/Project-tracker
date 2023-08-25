@@ -11,11 +11,12 @@ import { useNavigate } from "react-router-dom";
 import SideAndNavbar from "./SideandNavbar";
 import FAQ from "./FAQ";
 import TopValues from "./TopValues";
-
+import EmployeeList from "./EmployeeList";
+import Back from '../../assets/bg1.jpg';
 function index() {
 
   return (
-    <div>
+    <div style={{ height:'100vh', width:'100wh'}}>
         <Box sx={{ display: "flex" }}>
         <CssBaseline />
             <SideAndNavbar/>
@@ -23,6 +24,7 @@ function index() {
           component="main"
           sx={{
             backgroundColor:"white",
+            backgroundImage : `url(${Back})`,
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
@@ -31,14 +33,15 @@ function index() {
           <Toolbar />
           <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={8} lg={12} sm={12}>
                 {/* <Paper sx={{p:2,display:'flex',flexDirection:'column',height:250}}> */}
                   <TopValues/>
                 {/* </Paper> */}
               </Grid>
+              
               <Grid item xs={12} md={8} lg={12}>
                 {/* <Paper sx={{p:2,display:'flex',flexDirection:'column',height:310}}> */}
-                  {/* <Orders/> */}
+                  {/* <EmployeeList/> */}
                 {/* </Paper> */}
               </Grid>
               <Grid item xs={12}>

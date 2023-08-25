@@ -4,6 +4,8 @@ import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SideandNavbar from './SideandNavbar';
 import {Container,Box,Grid,CssBaseline} from '@mui/material'
+import Back from '../../assets/bg1.jpg';
+
 function Profile() {
   return (
 
@@ -13,7 +15,7 @@ function Profile() {
       <Box
           component="main"
           sx={{
-            
+            backgroundImage : `url(${Back})`,
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",

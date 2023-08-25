@@ -13,12 +13,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Switch from "@mui/material/Switch";
 import Link from "@mui/material/Link";
-import { FormGroup, FormControlLabel } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { FormGroup} from "@mui/material";
 import logo from '../../assets/logo.gif';
-import {MaterialUISwitch} from '../Style/Style.js';
 const drawerWidth = 240;
 
 function Navbar() {
@@ -107,7 +104,7 @@ About Us                </Link>
               </Button>
               <Button>
                 <Link
-                  href="/"
+                  href="/contactus"
                   variant="body2"
                   sx={{ textDecoration: "none", color: "black" }}
                 >

@@ -12,10 +12,42 @@ import SideandNavbar from './SideandNavbar';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
 import { http } from '../../Config/axiosConfig.js';
 import SecurityIcon from '@mui/icons-material/Security';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Back from '../../assets/bg1.jpg';
 
 function ViewManager() {
   const [Managers, setManagers] = useState([]);
-console.log(Managers);
+  const [refresh, setRefresh] = useState();
+  const navigator = useNavigate();
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it !'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          http.delete(`/users/${id}`).then((res) => {
+                    if (res.status == 200) {
+                      Swal.fire({
+                        icon: "success",
+                        title: "Issue Deleted",
+                        timer : 1500
+                      });
+                      setRefresh(!refresh);
+                    }
+                  });
+      }
+    })
+  }
+
   useEffect(() => {
     http
       .get('/users/manager')
@@ -26,7 +58,7 @@ console.log(Managers);
       .catch((err) => {
         console.log(err.messsage);
       });
-  }, []);
+  }, [refresh]);
   return (
     <Box sx={{ display: "flex" ,margin:0}}>
     <CssBaseline />
@@ -34,7 +66,7 @@ console.log(Managers);
     <Box
         component="main"
         sx={{
-          
+          backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -52,6 +84,7 @@ console.log(Managers);
             <StyledTableCell align="center">Email Id</StyledTableCell>
             <StyledTableCell align="center">Verified</StyledTableCell>
             <StyledTableCell align="center">Role</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,6 +97,8 @@ console.log(Managers);
               <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center">{row.isVerified === true ? "Verified" : "Not Verified"}</StyledTableCell>
               <StyledTableCell align="center"><Button variant='contained' color='info'><SecurityIcon/>{row.role}</Button></StyledTableCell>
+              <StyledTableCell align="center"><Button variant="outline" 
+                    onClick={() => navigator(`/createuser/${row._id}`)}>Edit&nbsp;<EditIcon/></Button>&nbsp;<Button variant="outline"   onClick={() => handleDelete(row._id)}>Delete&nbsp;<DeleteIcon/></Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -10,10 +10,44 @@ import Box from '@mui/material/Box';
 import SideandNavbar from './SideandNavbar';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
 import { http } from '../../Config/axiosConfig.js';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import Back from '../../assets/bg1.jpg';
 
 function ViewProject() {
   const [project, setProject] = useState([]);
-  console.log(project)
+  const [refresh, setRefresh] = useState();
+  const navigator = useNavigate();
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it !'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          http.delete(`/project/${id}`).then((res) => {
+                    if (res.status == 200) {
+                      Swal.fire({
+                        icon: "success",
+                        title: "Issue Deleted",
+                        timer : 1500
+                      });
+                      setRefresh(!refresh);
+                    }
+                  });
+      }
+    })
+  }
+
+
   useEffect(() => {
     http.get('/project')
       .then((res) => {
@@ -23,7 +57,7 @@ function ViewProject() {
       .catch((err) => {
         console.log(err.messsage);
       });
-  }, []);
+  }, [refresh]);
   return (
     <Box sx={{ display: "flex" ,margin:0}}>
     <CssBaseline />
@@ -31,7 +65,7 @@ function ViewProject() {
     <Box
         component="main"
         sx={{
-          
+          backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -50,6 +84,7 @@ function ViewProject() {
             <StyledTableCell align="center">Description</StyledTableCell>
             <StyledTableCell align="center">Date of Created</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
+            <StyledTableCell align="center">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,6 +98,8 @@ function ViewProject() {
               <StyledTableCell align="center">{row.description}</StyledTableCell>
               <StyledTableCell align="center">{row.date_of_creation}</StyledTableCell>
               <StyledTableCell align="center">+91-{row.phone}</StyledTableCell>
+              <StyledTableCell align="center"><Button variant="outline" 
+                    onClick={() => navigator(`/createproject/${row._id}`)}>Edit&nbsp;<EditIcon/></Button>&nbsp;<Button variant="outline"   onClick={() => handleDelete(row._id)}>Delete&nbsp;<DeleteIcon/></Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

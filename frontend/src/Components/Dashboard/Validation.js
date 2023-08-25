@@ -2,8 +2,8 @@ import * as Yup from "yup";
 
 export const IssueValidation = Yup.object({
   project_code: Yup.string().required("* Please select project"),
-  issue_type: Yup.string().required("* Please ente new password"),
-  issue_status: Yup.string().required("* Please ente new password"),
+  issue_type: Yup.string().required("* Please select issue type"),
+  issue_status: Yup.string().required("* Please select issue status"),
   // summary:Yup.string().oneOf([Yup.ref("new_password"),null,"* Password must be match"]).required(),
   summary: Yup.string().required(),
   description: Yup.string().required(),
@@ -11,6 +11,9 @@ export const IssueValidation = Yup.object({
   starting_date: Yup.date().required(),
   ending_date: Yup.date().required(),
   reporter: Yup.string().required(),
+  email:Yup.string().required(),
+  createdby:Yup.string().required(),
+
 });
 
 export const MemberValidation = Yup.object({
@@ -20,13 +23,13 @@ export const MemberValidation = Yup.object({
   phone: Yup.string().required(),
   date_of_joining: Yup.date().required(),
   designation: Yup.string().required(),
+  images:Yup.string(),
 });
 
 export const ProjectValidation = Yup.object({
   project_name: Yup.string().required(),
-  project_code: Yup.string().required(),
   description: Yup.string().required(),
-  phone: Yup.string().required(),
+  email: Yup.string().required(),
   date_of_creation: Yup.date().required(),
   project_type: Yup.string().required(),
 })

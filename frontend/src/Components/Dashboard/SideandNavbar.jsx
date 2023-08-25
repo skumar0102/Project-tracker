@@ -20,6 +20,8 @@ import logo from "../../assets/logo.gif";
 import { http } from "../../Config/axiosConfig.js";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import BadgeIcon from '@mui/icons-material/Badge';
+import BugReportIcon from '@mui/icons-material/BugReport';
 import {
   HomeOutlined,
   ReceiptOutlined,
@@ -27,12 +29,16 @@ import {
   CreateOutlined,
   LogoutOutlined,
   AccountBoxOutlined,
-  TaskAltOutlined,
+  TaskAltOutlined
 } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 import PendingIcon from "@mui/icons-material/Pending";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Linkstyle } from "../Style/MuiStyle.js";
-
+import Diversity2Icon from '@mui/icons-material/Diversity2';
+import AccountTreeRoundedIcon from '@mui/icons-material/AccountTreeRounded';
+import SecurityRoundedIcon from '@mui/icons-material/SecurityRounded';
+import LockResetRoundedIcon from '@mui/icons-material/LockResetRounded';
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -73,7 +79,7 @@ function SideandNavbar() {
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen(true);
   };
 
   const icons = {
@@ -81,10 +87,9 @@ function SideandNavbar() {
       <HomeOutlined />,
       <ReceiptOutlined />,
       <AccountBoxOutlined />,
-      <VisibilityIcon />,
-      <VisibilityIcon />,
-      <TaskAltOutlined />,
-      <PendingIcon />,
+      <Diversity2Icon />,
+      <BugReportIcon />,
+      <LockResetRoundedIcon />,
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
@@ -95,7 +100,10 @@ function SideandNavbar() {
       <CreateOutlined />,
       <CreateOutlined />,
       <CreateOutlined />,
-      <VisibilityIcon />,
+      <BugReportIcon />,
+      <AccountTreeRoundedIcon />,
+      <Diversity2Icon />,
+      <LockResetRoundedIcon />,
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
@@ -107,13 +115,12 @@ function SideandNavbar() {
       <CreateOutlined />,
       <CreateOutlined />,
       <CreateOutlined />,
-      <TaskAltOutlined />,
-      <PendingIcon />,
-      <VisibilityIcon />,
-      <VisibilityIcon />,
-      <VisibilityIcon />,
-      <VisibilityIcon />,
-      <VisibilityIcon />,
+      <BadgeIcon />,
+      <BugReportIcon />,
+      <Diversity2Icon />,
+      <AccountTreeRoundedIcon />,
+      <SecurityRoundedIcon />,
+      <LockResetRoundedIcon />,
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
@@ -139,48 +146,45 @@ function SideandNavbar() {
 
   let firstNavigation = {
     User: [
-      { field: "Home", value: false, component: "/dashboard" },
-      { field: "Profile", value: false, component: "/profile" },
-      { field: "Account", value: false, component: "/" },
-      { field: "View Team Members", value: false, component: "/team" },
-      { field: "View Tasks", value: false, component: "/tasks" },
-      { field: "Completed Tasks", value: false, component: "/tasks" },
-      { field: "Pending Tasks", value: false, component: "/tasks" },
-      { field: "FAQ", value: false, component: "/faq" },
-      { field: "Sign Out", value: false, component: () => handleLogout() },
+      { field: "Home", component: "/dashboard" },
+      { field: "Profile", component: "/profile" },
+      { field: "Account", component: "/" },
+      { field: "View Team Members", component: "/team" },
+      { field: "View Issue", component: "/tasks" },
+      { field: "Forgot Password", component: "/forgotpassword" },
+      { field: "FAQ", component: "/faq" },
+      { field: "Sign Out", component: () => handleLogout() },
     ],
     Manager: [
-      { field: "Home", value: false, component: "/dashboard" },
-      { field: "Profile", value: false, component: "/profile" },
-      { field: "Account", value: false, component: "/" },
-      { field: "Create Issue", value: false, component: "/createissue" },
-      { field: "Create Project", value: false, component: "/createproject" },
-      { field: "Create Team Member", value: false, component: "/createteam" },
-      { field: "View Tasks", value: false, component: "/tasks" },
-      { field: "FAQ", value: false, component: "/faq" },
-      { field: "Sign Out", value: false, component: () => handleLogout() },
+      { field: "Home", component: "/dashboard" },
+      { field: "Profile", component: "/profile" },
+      { field: "Account", component: "/" },
+      { field: "Create Issue", component: "/createissue" },
+      { field: "Create Project", component: "/createproject" },
+      { field: "Create Team Member", component: "/createteam" },
+      { field: "View Issues", component: "/tasks" },
+      { field: "View Projects", component: "/viewproject" },
+      { field: "View Team Members", component: "/team" },
+      { field: "Forgot Password", component: "/forgotpassword" },
+      { field: "FAQ", component: "/faq" },
+      { field: "Sign Out", component: () => handleLogout() },
     ],
     Admin: [
-      { field: "Home", value: false, component: "/dashboard" },
-      { field: "Profile", value: false, component: "/profile" },
-      { field: "Account", value: false, component: "/" },
-      { field: "Create Issue", value: false, component: "/createissue" },
-      { field: "Create Project", value: false, component: "/createproject" },
-      { field: "Create Team Member", value: false, component: "/createteam" },
-      { field: "Create User", value: false, component: "/" },
-      {
-        field: "Completed Tasks",
-        value: false,
-        component: "/viewcompletedtasks",
-      },
-      { field: "Pending Tasks", value: false, component: "/viewpendingtasks" },
-      { field: "View Users", value: false, component: "/viewusers" },
-      { field: "View Issues", value: false, component: "/tasks" },
-      { field: "View Projects", value: false, component: "/viewproject" },
-      { field: "View Team Members", value: false, component: "/team" },
-      { field: "View Managers", value: false, component: "/viewmanager" },
-      { field: "FAQ", value: false, component: "/faq" },
-      { field: "Sign Out", value: false, component: () => handleLogout() },
+      { field: "Home", component: "/dashboard" },
+      { field: "Profile", component: "/profile" },
+      { field: "Account", component: "/" },
+      { field: "Create Issue", component: "/createissue" },
+      { field: "Create Project", component: "/createproject" },
+      { field: "Create Team Member", component: "/createteam" },
+      { field: "Create Employee", component: "/createuser" },
+      { field: "View Employees", component: "/viewusers" },
+      { field: "View Issues", component: "/tasks" },
+      { field: "View Team Members", component: "/team" },
+      { field: "View Projects", component: "/viewproject" },
+      { field: "View Managers", component: "/viewmanager" },
+      { field: "Forgot Password", component: "/forgotpassword" },
+      { field: "FAQ", component: "/faq" },
+      { field: "Sign Out", component: () => handleLogout() },
     ],
   };
 
@@ -258,9 +262,12 @@ function SideandNavbar() {
           >
             <MenuIcon />
           </IconButton>
+          
+            
           <Typography variant="h6" noWrap component="div">
             Project Tracker
           </Typography>
+          
           <Button variant="contained" color="error" onClick={handleLogout}>
             SignOut
           </Button>{" "}

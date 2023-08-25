@@ -1,16 +1,22 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Box from '@mui/joy/Box';
 import {Container,Grid,CssBaseline,TextField,InputLabel,MenuItem,Select,FormControl,Button,Typography} from '@mui/material';
 import SideandNavbar from './SideandNavbar';
 import { useFormik } from 'formik';
 import {MemberValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
-import { http } from '../../Config/axiosConfig.js';
+import { httpFile,http } from '../../Config/axiosConfig.js';
 import Swal from 'sweetalert2';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import {useParams,useNavigate} from 'react-router-dom';
+import { message } from 'antd';
+import Back from '../../assets/bg1.jpg';
 
 function CreateTeam() {
-
+  const ID = useParams().id;
+  const [type, setType] = useState("create");
+  const [refresh, setRefresh] = useState()
+  const navigate = useNavigate();
   const formik = useFormik({
     validationSchema:MemberValidation,
     initialValues : {
@@ -19,30 +25,46 @@ function CreateTeam() {
       email:"",
       phone:"",
       date_of_joining:"",
-      designation:""
+      designation:"",
+      images:""
     },
     onSubmit:(values)=>{
-      http.post("/team",values).then((res)=>{
-        if(res.status === 201){
-          Swal.fire({
-            toast: true,
-            position: 'bottom-end',
-            icon: 'success',
-            background:'#4aa3d1',
-            title: 'Member created successfully Done !',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
+      console.log(values);
+        if(type === "create"){
+          httpFile.post("/team",values).then((res)=>{
+            if(res.status === 201){
+              message.config({top:100})
+              message.success('Member created successfully Done !');   
             }
-        })
+            formik.resetForm();
+          })
+        } else if (type === "Edit"){
+          http.put(`/team/${ID}`,values).then((res)=>{
+            if(res.status === 200){
+              message.config({top:100})
+              message.success('Member Updated successfully Done !'); 
+            }
+            formik.resetForm();
+            navigate('/team');
+          })
         }
-      })
+    
     }
 
   })
+
+  useEffect(() => {
+    http.get(`/team/${ID}`)
+    .then((res) =>{
+     setType("Edit");
+     formik.setFieldValue("first_name",res.data.first_name);
+     formik.setFieldValue("last_name",res.data.last_name);
+     formik.setFieldValue("email",res.data.email);
+     formik.setFieldValue("phone",res.data.phone);
+     formik.setFieldValue("date_of_joining",res.data.date_of_joining);
+     formik.setFieldValue("designation",res.data.designation);
+    }).catch((err) => console.log(err.message))
+  }, [refresh])
 
   const { handleChange, values, handleSubmit, handleBlur, errors, touched } =
 formik;
@@ -55,17 +77,17 @@ formik;
     <Box
         component="main"
         sx={{
-          
+          // backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
           
         }}
       >
-        <Container maxWidth="lg"  sx={{ mt: 10, mb: 4,ml:0 }}>
+        <Container maxWidth="lg"  sx={{ mt: 10, mb: 4 }}>
           <Grid container sx={{display:'flex',padding:2}}  columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <div style={{width:"100%"}}>
-            <h1>Create Team Member</h1>
+            <h1>{type === "Edit" ? "Update" : "Create"} Team Member</h1>
             <hr/>
             <Grid >
 
@@ -132,11 +154,19 @@ formik;
         </FormControl>
             </Grid>
             <br/>
-            {/* <Grid>
-            <input style={{width:"91.5%"}} type='file' label='Upload Image' variant='outlined' color='secondary' name='file' value='' onBlur={handleBlur} onChange={handleChange}  />
+            <Grid>
+            <FormControl sx={{ minWidth: 1045 }}>
+            <input  type='file' name="images" value={values.images}  onChange={handleChange}  />
+            {errors.images && touched.images ? (
+                <Typography  style={{ color: "red" }}>
+                  {errors.images}
+                </Typography>
+              ) : null}
+        </FormControl>
+            
             </Grid>
-            <br/> */}
-        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} ><AddCircleIcon/> &nbsp; Create Member </Button>
+            <br/>
+        <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} ><AddCircleIcon/> &nbsp; {type === "Edit" ? "Update Member" : "Create Team +"} </Button>
 
             </div>
           </Grid>
