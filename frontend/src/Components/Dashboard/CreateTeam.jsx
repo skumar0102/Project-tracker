@@ -166,7 +166,6 @@ formik;
               reader.onload = () =>{
                 if(reader.readyState === 2){
                   setFieldValue("avatar",reader.result); 
-                  serPreview(reader.result);
                 }
               }
               reader.readAsDataURL(e.target.files[0])

@@ -32,4 +32,5 @@ export const ProjectValidation = Yup.object({
   email: Yup.string().required(),
   date_of_creation: Yup.date().required(),
   project_type: Yup.string().required(),
+  project_file:Yup.string()
 })

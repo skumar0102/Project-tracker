@@ -7,7 +7,9 @@ const ProjectSchema = new mongoose.Schema({
     description  : {type:String},
     email        : {type:String},
     date_of_creation : {type:String},
-    project_type : {type:String}
+    project_type : {type:String},
+    project_file : {type:String},
+
 },{timestamps:true})
 
 export default new mongoose.model("Projects",ProjectSchema);

@@ -5,7 +5,7 @@ import SideandNavbar from './SideandNavbar';
 import { useFormik } from 'formik';
 import {ProjectValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
-import { http } from '../../Config/axiosConfig.js';
+import { http,httpFile } from '../../Config/axiosConfig.js';
 import Swal from 'sweetalert2';
 import { message } from 'antd';
 import {useParams,useNavigate} from 'react-router-dom';
@@ -14,7 +14,9 @@ import Back from '../../assets/bg1.jpg';
 function CreateProject() {
   const ID = useParams().id;
   const [type, setType] = useState("create");
-  const [refresh, setRefresh] = useState()
+  const [refresh, setRefresh] = useState();
+
+  console.log(preview)
   const navigate = useNavigate();
     const formik = useFormik({
         validationSchema:ProjectValidation,
@@ -23,11 +25,12 @@ function CreateProject() {
           description:"",
           email:"",
           date_of_creation:"",
-          project_type:""
+          project_type:"",
+          project_file:""
         },
         onSubmit:(values)=>{
           if(type === "create"){
-            http.post("/project",values).then((res)=>{
+            httpFile.post("/project",values).then((res)=>{
               if(res.status === 201){
                 message.config({top:100})
                 message.success('Project created successfully Done !');   
@@ -152,7 +155,20 @@ function CreateProject() {
         </FormControl>
             </Grid>
             <br/>
-            <input type="file" accept='application/pdf' />
+            <input 
+            type="file" 
+            accept='application/pdf'
+            onChange={(e)=>{
+              let reader = new FileReader();
+              reader.onload = () =>{
+                if(reader.readyState === 2){
+                  setFieldValue("project_file",reader.result); 
+                }
+              }
+              reader.readAsDataURL(e.target.files[0])
+            }} 
+            name='project_file'
+            />
             <br/>
             <br/>
         <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} >{type === "Edit" ? "Update Project" : "Create Project +"}</Button>
