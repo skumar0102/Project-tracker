@@ -152,6 +152,9 @@ function CreateProject() {
         </FormControl>
             </Grid>
             <br/>
+            <input type="file" accept='application/pdf' />
+            <br/>
+            <br/>
         <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} >{type === "Edit" ? "Update Project" : "Create Project +"}</Button>
 
             </div>

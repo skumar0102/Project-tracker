@@ -23,7 +23,7 @@ export const MemberValidation = Yup.object({
   phone: Yup.string().required(),
   date_of_joining: Yup.date().required(),
   designation: Yup.string().required(),
-  images:Yup.string(),
+  avatar:Yup.string(),
 });
 
 export const ProjectValidation = Yup.object({

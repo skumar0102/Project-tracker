@@ -4,7 +4,6 @@ async function createIssue(req, res) {
   try {
 let ticket_random_no = Math.floor(Math.random() * 1000000000);
     let {
-      ticket_no,
       project_code,
       issue_type,
       issue_status,

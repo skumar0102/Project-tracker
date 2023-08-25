@@ -15,7 +15,9 @@ import Back from '../../assets/bg1.jpg';
 function CreateTeam() {
   const ID = useParams().id;
   const [type, setType] = useState("create");
-  const [refresh, setRefresh] = useState()
+  const [refresh, setRefresh] = useState();
+  const [preview,serPreview] = useState('');
+  console.log(preview)
   const navigate = useNavigate();
   const formik = useFormik({
     validationSchema:MemberValidation,
@@ -26,7 +28,7 @@ function CreateTeam() {
       phone:"",
       date_of_joining:"",
       designation:"",
-      images:""
+      avatar:""
     },
     onSubmit:(values)=>{
       console.log(values);
@@ -66,7 +68,7 @@ function CreateTeam() {
     }).catch((err) => console.log(err.message))
   }, [refresh])
 
-  const { handleChange, values, handleSubmit, handleBlur, errors, touched } =
+  const { handleChange, values, handleSubmit,setFieldValue, handleBlur, errors, touched } =
 formik;
 
   return (
@@ -156,10 +158,24 @@ formik;
             <br/>
             <Grid>
             <FormControl sx={{ minWidth: 1045 }}>
-            <input  type='file' name="images" value={values.images}  onChange={handleChange}  />
-            {errors.images && touched.images ? (
+            <input  
+            type='file' 
+            accept='image/*'
+            onChange={(e)=>{
+              let reader = new FileReader();
+              reader.onload = () =>{
+                if(reader.readyState === 2){
+                  setFieldValue("avatar",reader.result); 
+                  serPreview(reader.result);
+                }
+              }
+              reader.readAsDataURL(e.target.files[0])
+            }} 
+            name='avatar'
+            />
+            {errors.avatar && touched.avatar ? (
                 <Typography  style={{ color: "red" }}>
-                  {errors.images}
+                  {errors.avatar}
                 </Typography>
               ) : null}
         </FormControl>
@@ -173,6 +189,7 @@ formik;
           </Container>
           </Box>
           </Box>
+          
           </FormGroup>
   )
 }

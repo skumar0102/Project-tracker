@@ -8,7 +8,7 @@ const ProjectSchema = new mongoose.Schema({
     phone        : {type:String},
     date_of_joining : {type:String},
     designation : {type:String},
-    images : {type:String}
+    avatar : {type:String}
 },{timestamps:true})
 
 export default new mongoose.model("Team",ProjectSchema);

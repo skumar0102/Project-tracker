@@ -102,7 +102,7 @@ function Team() {
             {/* <img src={image} alt="Employee image" style={{width:'50',height:'50'}} /> */}
 
                   <Avatar
-                    src={image}
+                    src={emp.avatar}
                     sx={{ width: 96, height: 96 }}
                   />
                  
