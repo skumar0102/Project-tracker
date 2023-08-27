@@ -19,6 +19,7 @@ export const SignUpValidation = Yup.object({
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
       ),
-    role:Yup.string().max(100).required('* Please choose Role')
+    role:Yup.string().max(100).required('* Please choose Role'),
+    avatar:Yup.string()
     
 })

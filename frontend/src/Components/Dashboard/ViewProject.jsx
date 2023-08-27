@@ -97,7 +97,7 @@ function ViewProject() {
               <StyledTableCell align="center">{row.project_type}</StyledTableCell>
               <StyledTableCell align="center">{row.description}</StyledTableCell>
               <StyledTableCell align="center">{row.date_of_creation}</StyledTableCell>
-              <StyledTableCell align="center">+91-{row.phone}</StyledTableCell>
+              <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center"><Button variant="outline" 
                     onClick={() => navigator(`/createproject/${row._id}`)}>Edit&nbsp;<EditIcon/></Button>&nbsp;<Button variant="outline"   onClick={() => handleDelete(row._id)}>Delete&nbsp;<DeleteIcon/></Button></StyledTableCell>
             </StyledTableRow>

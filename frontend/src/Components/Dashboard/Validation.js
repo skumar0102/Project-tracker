@@ -13,6 +13,7 @@ export const IssueValidation = Yup.object({
   reporter: Yup.string().required(),
   email:Yup.string().required(),
   createdby:Yup.string().required(),
+  project_file:Yup.string()
 
 });
 

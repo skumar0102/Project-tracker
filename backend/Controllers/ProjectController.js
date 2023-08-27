@@ -4,7 +4,7 @@ async function createProject(req,res){
     try {
         let project_random_no = Math.floor(Math.random() * 100000);
         let {project_name,description,email,date_of_creation,project_type,project_file} = req.body
-        let result = await Project.create({project_name,project_code:project_random_no,description,email,date_of_creation,project_type,project_file});
+        let result = await Project.create({project_code:project_random_no,project_name,description,email,date_of_creation,project_type,project_file});
         res.status(201).send('Project created succesfully !');
     } catch (error) {
         res.status(400).send(error.message);

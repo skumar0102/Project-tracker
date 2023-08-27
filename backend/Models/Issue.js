@@ -14,6 +14,7 @@ const IssueSchema = new mongoose.Schema({
     reporter: {type:String},
     email: {type:String},
     createdby: {type:String},
+    project_file: {type:String}
 },{timestamps:true})
 
 export default new mongoose.model("Issues",IssueSchema);

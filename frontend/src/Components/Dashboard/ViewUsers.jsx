@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import {Container,Grid,CssBaseline} from '@mui/material'
+import {Container,Grid,CssBaseline,Avatar} from '@mui/material'
 import Box from '@mui/material/Box';
 import SideandNavbar from './SideandNavbar';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
@@ -80,6 +80,7 @@ function ViewUsers() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell align="center">Image</StyledTableCell>
             <StyledTableCell align="center">First Name</StyledTableCell>
             <StyledTableCell align="center">Last Name</StyledTableCell>
             <StyledTableCell align="center">Email Id</StyledTableCell>
@@ -91,6 +92,7 @@ function ViewUsers() {
         <TableBody>
           {Users.map((row) => (
             <StyledTableRow key={row}>
+              <StyledTableCell align="center"><Avatar alt={row.first_name} src={row.avatar} /></StyledTableCell>
               <StyledTableCell component="th" scope="row" align="center">
                 {row.first_name}
               </StyledTableCell>

@@ -12,7 +12,7 @@ async function createUser(req, res) {
       password,
       role,
       isVerified,
-      
+      avatar
      
     } = req.body;
     let salt = await bcrypt.genSalt(10);
@@ -26,6 +26,7 @@ async function createUser(req, res) {
         password,
         role,
         isVerified,
+        avatar,
         expiresIn: 60,
       },
       process.env.JWT_SECRET_KEY
@@ -38,6 +39,7 @@ async function createUser(req, res) {
       email,
       password: hash,
       role,
+      avatar
     });
     res
       .status(201)
@@ -50,6 +52,7 @@ async function createUser(req, res) {
           email: result.email,
           password: result.password,
           role: result.role,
+          avatar:result.avatar,
           accessToken : result.accessToken
         },
       });

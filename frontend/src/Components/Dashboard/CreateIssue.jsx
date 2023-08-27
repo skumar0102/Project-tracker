@@ -4,32 +4,14 @@ FormControl,Select, Typography, TextField,Button,
 Grid,CssBaseline} from '@mui/material';
 import SideandNavbar from './SideandNavbar';
 import { useFormik } from 'formik'; 
-import { http } from '../../Config/axiosConfig.js';
+import { http,httpFile } from '../../Config/axiosConfig.js';
 import {IssueValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
 import { message } from 'antd';
 import {useParams,useNavigate} from 'react-router-dom';
 import Back from '../../assets/bg1.jpg';
-import { UploadOutlined } from '@ant-design/icons';
-import {  Upload } from 'antd';
 
-const props = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+
 
 function CreateIssue() {
 const ID = useParams().id;
@@ -53,11 +35,12 @@ const formik = useFormik({
     ending_date:"",
     reporter:"",
     email:"",
-    createdby:""
+    createdby:"",
+    project_file:""
   },
   onSubmit:(values)=>{
   if(type === "create"){
-    http.post("/issue",values).then((res)=>{
+    httpFile.post("/issue",values).then((res)=>{
       if(res.status === 201){
         message.config({top:100})
         message.success('Issue create successfully Done !');   
@@ -81,7 +64,7 @@ const formik = useFormik({
 
 
 
-const { handleChange, values, handleSubmit, handleBlur, errors, touched,resetForm } =
+const { handleChange, values, handleSubmit,setFieldValue, handleBlur, errors, touched,resetForm } =
 formik;
 
 
@@ -351,9 +334,24 @@ sx={{ display: "flex",color:'black' }}>
               ) : null}
               <br/>
               <br/>
-              <Upload {...props}>
-    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-  </Upload>
+              <Grid>
+              <FormControl>
+              <input 
+            type="file" 
+            accept='.doc,.docx,application/pdf'
+            onChange={(e)=>{
+              let reader = new FileReader();
+              reader.onload = () =>{
+                if(reader.readyState === 2){
+                  setFieldValue("project_file",reader.result); 
+                }
+              }
+              reader.readAsDataURL(e.target.files[0])
+            }} 
+            name='project_file'
+            />
+              </FormControl>
+            </Grid>
               <br/>
               <br/>
         <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff',ml:1 }} >{type === "Edit" ? "Update" : "Create"}

@@ -12,7 +12,7 @@ import {
 import {FormGroup} from 'react-bootstrap';
   import { SignUpValidation } from '../Validation/YupValidation.js';
   import { useFormik } from 'formik';
-import { http } from '../../Config/axiosConfig.js';
+import { http,httpFile } from '../../Config/axiosConfig.js';
   import image from '../../assets/logo.gif';
   import { message } from 'antd';
 import SideandNavbar from './SideandNavbar';
@@ -28,11 +28,11 @@ import Back from '../../assets/bg1.jpg';
     const formik = useFormik({
         validationSchema:SignUpValidation,
         initialValues : {
-            employee_code:'', first_name: '', last_name: '', email: '', password: '', role: ''
+            employee_code:'', first_name: '', last_name: '', email: '', password: '', role: '',avatar:''
         },
         onSubmit:(values)=>{
           if(type === "create"){
-            http.post("/users",values).then((res)=>{
+            httpFile.post("/users",values).then((res)=>{
               if(res.status === 201){
                 message.config({top:100})
                 message.success('user created successfully Done !');   
@@ -68,7 +68,7 @@ import Back from '../../assets/bg1.jpg';
     }, [refresh]);
    
 
-    const { handleChange, values, handleSubmit, handleBlur, errors, touched,resetForm } =
+    const { handleChange, values, handleSubmit,setFieldValue, handleBlur, errors, touched,resetForm } =
     formik;
 
     
@@ -81,7 +81,7 @@ import Back from '../../assets/bg1.jpg';
     <Box
         component="main"
         sx={{
-          backgroundImage : `url(${Back})`,
+          // backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -148,6 +148,32 @@ import Back from '../../assets/bg1.jpg';
               <Typography style={{ color: "red" }}>{errors.role}</Typography>
             ) : null}
           </FormControl>
+          <br/>
+          <br/>
+            <Grid>
+            <FormControl sx={{ minWidth: 1045 }}>
+            <input  
+            type='file' 
+            accept='image/*'
+            onChange={(e)=>{
+              let reader = new FileReader();
+              reader.onload = () =>{
+                if(reader.readyState === 2){
+                  setFieldValue("avatar",reader.result); 
+                }
+              }
+              reader.readAsDataURL(e.target.files[0])
+            }} 
+            name='avatar'
+            />
+            {errors.avatar && touched.avatar ? (
+                <Typography  style={{ color: "red" }}>
+                  {errors.avatar}
+                </Typography>
+              ) : null}
+        </FormControl>
+            
+            </Grid>
           <br />
           <br />
           <Grid>

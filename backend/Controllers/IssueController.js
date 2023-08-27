@@ -14,7 +14,8 @@ let ticket_random_no = Math.floor(Math.random() * 1000000000);
       ending_date,
       reporter,
       email,
-      createdby
+      createdby,
+      project_file
     } = req.body;
     let result = await Issue.create({
       ticket_no:ticket_random_no,
@@ -28,7 +29,8 @@ let ticket_random_no = Math.floor(Math.random() * 1000000000);
       ending_date,
       reporter,
       email,
-      createdby
+      createdby,
+      project_file
     });
     res.status(201).send("Issue created succesfully !");
 

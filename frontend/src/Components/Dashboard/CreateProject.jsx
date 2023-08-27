@@ -16,7 +16,6 @@ function CreateProject() {
   const [type, setType] = useState("create");
   const [refresh, setRefresh] = useState();
 
-  console.log(preview)
   const navigate = useNavigate();
     const formik = useFormik({
         validationSchema:ProjectValidation,
@@ -37,7 +36,8 @@ function CreateProject() {
               }
               formik.resetForm();
             })
-          } else if (type === "Edit"){
+          } 
+          else if (type === "Edit"){
             http.put(`/project/${ID}`,values).then((res)=>{
               if(res.status === 200){
                 message.config({top:100})
@@ -65,7 +65,7 @@ function CreateProject() {
       }, [refresh])
       
     
-      const { handleChange, values, handleSubmit, handleBlur, errors, touched } =
+      const { handleChange, values, handleSubmit,setFieldValue, handleBlur, errors, touched } =
     formik;
   return (
     <FormGroup onSubmit={handleSubmit} >
@@ -75,7 +75,7 @@ function CreateProject() {
     <Box
         component="main"
         sx={{
-          backgroundImage : `url(${Back})`,
+          // backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
           overflow: "auto",
@@ -155,9 +155,11 @@ function CreateProject() {
         </FormControl>
             </Grid>
             <br/>
-            <input 
+            <Grid>
+              <FormControl>
+              <input 
             type="file" 
-            accept='application/pdf'
+            accept='.doc,.docx,application/pdf'
             onChange={(e)=>{
               let reader = new FileReader();
               reader.onload = () =>{
@@ -169,6 +171,9 @@ function CreateProject() {
             }} 
             name='project_file'
             />
+              </FormControl>
+            </Grid>
+            
             <br/>
             <br/>
         <Button variant='contained' type="submit" color='info'  sx={{ color: '#fff' }} >{type === "Edit" ? "Update Project" : "Create Project +"}</Button>

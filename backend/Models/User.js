@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     email : {type:String,require:true,unique: true},
     password : {type:String,require:true,maxlength:200},
     isVerified: {type:Boolean, default:false},
-    
+    avatar:{type:String}
 },{timestamps : true})
 
 
