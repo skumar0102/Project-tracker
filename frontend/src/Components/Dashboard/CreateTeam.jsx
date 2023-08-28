@@ -41,7 +41,7 @@ function CreateTeam() {
             formik.resetForm();
           })
         } else if (type === "Edit"){
-          http.put(`/team/${ID}`,values).then((res)=>{
+          httpFile.put(`/team/${ID}`,values).then((res)=>{
             if(res.status === 200){
               message.config({top:100})
               message.success('Member Updated successfully Done !'); 

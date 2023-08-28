@@ -15,10 +15,11 @@ export const SignUpValidation = Yup.object({
     first_name:Yup.string().max(100).required('* Please enter First Name'),
     last_name:Yup.string().max(100).required('* Please enter Last Name'),
     email:Yup.string().max(100).required('* Please enter your email'),
-    password:Yup.string().max(100).required('* Please enter your password').matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-      ),
+    // password:Yup.string().max(100).required('* Please enter your password').matches(
+    //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //     "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    //   ),
+    password:Yup.string().max(100).required('* Please enter your password'),
     role:Yup.string().max(100).required('* Please choose Role'),
     avatar:Yup.string()
     

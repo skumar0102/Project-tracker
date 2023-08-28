@@ -13,6 +13,7 @@ import image from '../assets/logo.gif';
 // import Footer from '../Footer/Footer.js';
 import SignIn from './SignIn.jsx';
 import Slider from './Slider.js';
+import { message } from 'antd';
 import Navbar from '../Components/Layout/Navbar.jsx';
 const init1 = { loginemail: '', loginpassword: '' }
 const init2 = { employee_code:'', first_name: '', last_name: '', email: '', password: '', role: '' }
@@ -35,29 +36,13 @@ function Main() {
                                     localStorage.setItem('role',res.data.result.role);
                                     localStorage.setItem('first_name',res.data.result.first_name);
                                     localStorage.setItem('Created_by',res.data.result.employee_code);
-                                    Swal.fire({
-                                        toast: true,
-                                        position: 'bottom-end',
-                                        icon: 'success',
-                                        title: 'Signed in successfully',
-                                        showConfirmButton: false,
-                                        timer: 3000,
-                                        // background:'#4aa3d1',
-                                        timerProgressBar: true,
-                                        didOpen: (toast) => {
-                                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                        }
-                                    })
+                                    message.config({top:100})
+                                    message.success('Logged In successfully Done !'); 
 
                                     navigator("/dashboard");
                                 }else if(res.status === 401 || res.status === 400 || res.status === 404){
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Something went wrong!',
-                                        footer: '<a href="">Why do I have this issue?</a>'
-                                      })
+                                    message.config({top:100})
+                                    message.success('Something went wrong !');
                                 }
                             })
                         : http.post("/users", values)

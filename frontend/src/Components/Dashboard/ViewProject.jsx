@@ -9,7 +9,7 @@ import {Container,Grid,CssBaseline} from '@mui/material'
 import Box from '@mui/material/Box';
 import SideandNavbar from './SideandNavbar';
 import {StyledTableCell,StyledTableRow} from '../Style/MuiStyle.js'
-import { http } from '../../Config/axiosConfig.js';
+import { http,httpFile } from '../../Config/axiosConfig.js';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
@@ -20,6 +20,8 @@ import Back from '../../assets/bg1.jpg';
 function ViewProject() {
   const [project, setProject] = useState([]);
   const [refresh, setRefresh] = useState();
+  const [data, setData] = useState([]);
+  console.log(data)
   const navigator = useNavigate();
 
   const handleDelete = (id) => {
@@ -47,7 +49,16 @@ function ViewProject() {
     })
   }
 
-
+  const onButtonClick = (id) => {
+    http.get(`/project/${id}`).then(res => setData(res.data)).then(res=>{
+      const linkSource = `${data.project_file}`;
+    const downloadLink = document.createElement("a");
+    const fileName = "document.pdf";
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();     
+    })
+  }
   useEffect(() => {
     http.get('/project')
       .then((res) => {
@@ -85,6 +96,7 @@ function ViewProject() {
             <StyledTableCell align="center">Date of Created</StyledTableCell>
             <StyledTableCell align="center">Phone</StyledTableCell>
             <StyledTableCell align="center">Actions</StyledTableCell>
+            <StyledTableCell align="center">Download PDF  </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,6 +112,7 @@ function ViewProject() {
               <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center"><Button variant="outline" 
                     onClick={() => navigator(`/createproject/${row._id}`)}>Edit&nbsp;<EditIcon/></Button>&nbsp;<Button variant="outline"   onClick={() => handleDelete(row._id)}>Delete&nbsp;<DeleteIcon/></Button></StyledTableCell>
+              <StyledTableCell align="center">{row.project_file === "" ? "No File" :<Button variant='contained' color='success' onClick={()=> onButtonClick(row._id)}>Download</Button>}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

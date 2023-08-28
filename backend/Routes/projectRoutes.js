@@ -8,7 +8,7 @@ router.post('/',upload.single('project_file'),createProject);
 router.get('/',getProject);
 router.get('/:id',getProjectById);
 router.delete('/:id',deleteProject);
-router.put('/:id',updateProject)
+router.put('/:id',upload.single('project_file'),updateProject)
 
 
 export default router;

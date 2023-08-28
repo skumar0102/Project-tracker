@@ -2,9 +2,9 @@ import Team from "../Models/Team.js";
 
 async function createTeam(req,res){
     try {
-        let id_no = Math.floor(Math.random() * 10000);
+        let id_no_increment = await Team.find().count()+1;
         let {first_name,last_name,email,phone,date_of_joining,designation,avatar} = req.body
-        let result = await Team.create({id:id_no,first_name,last_name,email,phone,date_of_joining,designation,avatar});
+        let result = await Team.create({id:id_no_increment,first_name,last_name,email,phone,date_of_joining,designation,avatar});
         res.status(201).send('Member created succesfully !');
     } catch (error) {
         res.status(400).send(error.message);

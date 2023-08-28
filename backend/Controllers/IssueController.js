@@ -2,8 +2,9 @@ import Issue from "../Models/Issue.js";
 import transport from "../Config/nodemailerConfig.js";
 async function createIssue(req, res) {
   try {
-let ticket_random_no = Math.floor(Math.random() * 1000000000);
+    
     let {
+      
       project_code,
       issue_type,
       issue_status,
@@ -17,8 +18,9 @@ let ticket_random_no = Math.floor(Math.random() * 1000000000);
       createdby,
       project_file
     } = req.body;
+    let ticket_no_increment = await Issue.find().count()+1;
     let result = await Issue.create({
-      ticket_no:ticket_random_no,
+      ticket_no:ticket_no_increment,
       project_code,
       issue_type,
       issue_status,

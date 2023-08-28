@@ -9,12 +9,9 @@ import {IssueValidation} from './Validation.js';
 import {FormGroup} from 'react-bootstrap';
 import { message } from 'antd';
 import {useParams,useNavigate} from 'react-router-dom';
-import Back from '../../assets/bg1.jpg';
 
-
-
-function CreateIssue() {
-const ID = useParams().id;
+function CreateTesingIssue() {
+    const ID = useParams().id;
 const [type, setType] = useState("create");
 const [Projects, setProjects] = useState([]);
 const [Team, setTeam] = useState([]);
@@ -101,8 +98,6 @@ formik;
        formik.setFieldValue("createdby",res.data.createdby);
       }).catch((err) => console.log(err.message))
   }, [refresh]);
-
-
   return (
     <>
 <FormGroup onSubmit={handleSubmit} >
@@ -374,4 +369,4 @@ sx={{ display: "flex",color:'black' }}>
   )
 }
 
-export default CreateIssue
+export default CreateTesingIssue

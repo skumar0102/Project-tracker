@@ -120,7 +120,7 @@ import Back from '../../assets/bg1.jpg';
 </Grid><br/>
             <Grid >
 
-<TextField style={{width:"91.5%"}} type="password" variant='outlined' label='Password *' color='secondary' name="password" value={values.password} onBlur={handleBlur} onChange={handleChange}  />&nbsp;&nbsp;&nbsp;&nbsp;            
+<TextField style={{width:"91.5%"}} type="password" variant='outlined' disabled label='Password *' color='secondary' name="password" value={values.password} onBlur={handleBlur} onChange={handleChange}  />&nbsp;&nbsp;&nbsp;&nbsp;            
 {errors.password ? (
             <Typography sx={{ color: "red" }}>{errors.password}</Typography>
           ) : null}
@@ -143,6 +143,7 @@ import Back from '../../assets/bg1.jpg';
                 User
               </MenuItem>
               <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem value="Tester">Tester</MenuItem>
             </Select>
             {errors.role ? (
               <Typography style={{ color: "red" }}>{errors.role}</Typography>

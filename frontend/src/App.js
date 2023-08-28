@@ -18,6 +18,8 @@ import Page404 from './Pages/Page404';
 import EmployeeList from './Components/Dashboard/EmployeeList';
 import CreateUser from './Components/Dashboard/CreateUser';
 import ForgotPassword from './Pages/ForgotPassword';
+import ViewTesters from './Components/Dashboard/ViewTesters';
+import CreateTesingIssue from './Components/Dashboard/CreateTesingIssue';
 import './App.css';
 function App() {
   return (
@@ -35,10 +37,13 @@ function App() {
       <Route path="/viewusers" element={<ViewUsers/>} />
       <Route path="/viewmanager" element={<ViewManager/>} />
       <Route path="/viewproject" element={<ViewProject/>} />
+      <Route path="/viewtester" element={<ViewTesters/>} />
       <Route path="/tasks" element={<Tasks/>} />
       <Route path="/createteam" element={<CreateTeam/>} />
       <Route path="/createteam/:id" element={<CreateTeam/>} />
       <Route path="/createproject" element={<CreateProject/>} />
+      <Route path="/createtestingissue" element={<CreateTesingIssue/>} />
+      <Route path="/createtestingissue/:id" element={<CreateTesingIssue/>} />
       <Route path="/createproject/:id" element={<CreateProject/>} />
       <Route path="/chart" element={<PieChart/>} />
       <Route path="/contactus" element={<ContactUs/>} />

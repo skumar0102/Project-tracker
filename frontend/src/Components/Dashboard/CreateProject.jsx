@@ -38,7 +38,7 @@ function CreateProject() {
             })
           } 
           else if (type === "Edit"){
-            http.put(`/project/${ID}`,values).then((res)=>{
+            httpFile.put(`/project/${ID}`,values).then((res)=>{
               if(res.status === 200){
                 message.config({top:100})
                 message.success('Issue Updated successfully Done !'); 

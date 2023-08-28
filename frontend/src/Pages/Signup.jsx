@@ -99,6 +99,7 @@ function Signup({
                 User
               </MenuItem>
               <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem value="Tester">Tester</MenuItem>
             </Select>
             {errors.role ? (
               <Typography style={{ color: "red" }}>{errors.role}</Typography>

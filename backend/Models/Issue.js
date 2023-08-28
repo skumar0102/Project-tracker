@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 const IssueSchema = new mongoose.Schema({
-    ticket_no : {type:String},
+    ticket_no : {type:Number,default:0},
     project_code: {type:String},
     issue_type:{type:String},
     issue_status : {type:String},

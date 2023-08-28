@@ -45,6 +45,15 @@ async function getMenuUser(req,res){
     }
 }
 
+async function getMenuTester(req,res){
+    try {
+        let result = await Menu.findOne({'role':'Tester'});
+        res.status(200).send({result});
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 async function deleteMenu(req,res){
     try {
         let result = await Menu.deleteOne({_id:req.params.id});
@@ -56,4 +65,4 @@ async function deleteMenu(req,res){
 
 
 
-export {createMenu,getMenu,deleteMenu,getMenuAdmin,getMenuManager,getMenuUser}
+export {createMenu,getMenu,deleteMenu,getMenuAdmin,getMenuManager,getMenuUser,getMenuTester}

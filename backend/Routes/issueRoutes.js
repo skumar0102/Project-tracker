@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/',upload.single('project_file'),createIssue);
 router.get('/:id',getIssueById);
-router.put('/:id',updateIssue);
+router.put('/:id',upload.single('project_file'),updateIssue);
 router.get('/createdby/:createdby',getIssueByCode);
 router.get('/assignee/:email',getIssueByEmail);
 router.get('/',getIssues);

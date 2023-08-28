@@ -7,6 +7,6 @@ router.post('/',upload.single('images'),createTeam);
 router.get('/',getTeam);
 router.get('/:id',getTeamById);
 router.delete('/:id',deleteTeam);
-router.put('/:id',updateTeam)
+router.put('/:id',upload.single('images'),updateTeam)
 export default router;
 

@@ -91,7 +91,7 @@ function EmployeeList() {
           }}
         >
           <CardContent sx={{ alignItems: "center", textAlign: "center" }}>
-            <img src={image} alt="Employee image" style={{width:'50',height:'50'}} />
+            <img src={empDetail.avatar} alt="Employee image" height="200px" width="200px"/>
             
             <Chip
               size="sm"
@@ -210,7 +210,7 @@ function EmployeeList() {
           {(item) => (
             <List.Item key={item.email}>
               <List.Item.Meta
-                avatar={<Avatar src={image} />}
+                avatar={<Avatar src={item.avatar} />}
                 title={
                   <a href="#" onClick={() => showModal(item._id)}>
                     {item.first_name}

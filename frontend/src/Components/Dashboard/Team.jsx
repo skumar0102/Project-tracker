@@ -59,8 +59,7 @@ function Team() {
   };
 
   useEffect(() => {
-    http
-      .get(`/team`)
+    http.get(`/team`)
       .then((res) => {
         setData(res.data.result);
       })
@@ -116,8 +115,8 @@ function Team() {
                       borderColor: "background.surface",
                     }}
                   >
-                    {emp.first_name.toUpperCase()}&nbsp;
-                    {emp.last_name.toUpperCase()}
+                    {emp.first_name}&nbsp;
+                    {emp.last_name}
                   </Chip>
                   <Typography
                     fontSize="lg"

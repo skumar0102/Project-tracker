@@ -124,6 +124,17 @@ function SideandNavbar() {
       <HelpOutlineOutlined />,
       <LogoutOutlined />,
     ],
+    Tester:[
+      <HomeOutlined />,
+      <ReceiptOutlined />,
+      <AccountBoxOutlined />,
+      <Diversity2Icon />,
+      <BugReportIcon />,
+      <CreateOutlined />,
+      <LockResetRoundedIcon />,
+      <HelpOutlineOutlined />,
+      <LogoutOutlined />,
+    ]
   };
 
   const handleLogout = () => {
@@ -131,6 +142,10 @@ function SideandNavbar() {
       .get("auth/logout")
       .then((res) => {
         localStorage.removeItem("token");
+        localStorage.removeItem("Created_by");
+        localStorage.removeItem("email");
+        localStorage.removeItem("role");
+        localStorage.removeItem("first_name");
         Swal.fire("Logout Success", "User Logged Out", "Success");
         setrefresh(!refresh);
         navigate("/");
@@ -186,6 +201,17 @@ function SideandNavbar() {
       { field: "FAQ", component: "/faq" },
       { field: "Sign Out", component: () => handleLogout() },
     ],
+    Tester :[
+      { field: "Home", component: "/dashboard" },
+      { field: "Profile", component: "/profile" },
+      { field: "Account", component: "/" },
+      { field: "View Team Members", component: "/team" },
+      { field: "View Issues", component: "/tasks" },
+      { field: "Create Tesing Issues", component: "/tasks" },
+      { field: "Forgot Password", component: "/forgotpassword" },
+      { field: "FAQ", component: "/faq" },
+      { field: "Sign Out", component: () => handleLogout() },
+    ]
   };
 
   useEffect(() => {
@@ -245,6 +271,20 @@ function SideandNavbar() {
           ))}
         </>
       );
+    } else if(Role === "Tester"){
+      return(
+        <>
+         {menu.map((el, index) => (
+            // <ListItemButton onClick={firstNavigation.Admin[8].component}>
+            <ListItemButton>
+              <ListItemIcon>{icons.Tester[index]}</ListItemIcon>
+              <Linkstyle to={firstNavigation.Tester[index].component}>
+                <ListItemText primary={el} />
+              </Linkstyle>
+            </ListItemButton>
+          ))}
+        </>
+      )
     }
   };
 

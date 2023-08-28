@@ -114,6 +114,15 @@ async function getUser(req,res){
   }
 }
 
+async function getTester(req,res){
+  try {
+      let result = await User.find({'role':'Tester'});
+      res.status(200).send({result});
+  } catch (error) {
+      res.status(400).send(error.message);
+  }
+}
+
 async function getUsers(req, res) {
   try {
     let result = await User.find();
@@ -154,10 +163,13 @@ async function forgotpassword(req, res) {
   try {
     let emailUser = await User.findOne({'email':req.body.email});
     if(!emailUser) return res.status(400).send('User not found');
+    let {password} = req.body;
+    let salt = await bcrypt.genSalt(10);
+    let hash = await bcrypt.hash(password, salt);
 
     let result = await User.findOneAndUpdate({
       email: emailUser,
-      },{password: req.body.password});
+      },{password: hash});
     res.status(200).send({ success: true, result,message:"Updated" });
   } catch (error) {
     res.status(400).send(error.message);
@@ -173,5 +185,6 @@ export {
   forgotpassword,
   getAdmin,
   getManager,
-  getUser
+  getUser,
+  getTester
 };

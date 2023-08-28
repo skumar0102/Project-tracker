@@ -41,7 +41,7 @@ function index() {
               
               <Grid item xs={12} md={8} lg={12}>
                 {/* <Paper sx={{p:2,display:'flex',flexDirection:'column',height:310}}> */}
-                  {/* <EmployeeList/> */}
+                  <EmployeeList/>
                 {/* </Paper> */}
               </Grid>
               <Grid item xs={12}>

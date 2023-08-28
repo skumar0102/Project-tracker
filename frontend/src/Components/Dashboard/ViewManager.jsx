@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Back from '../../assets/bg1.jpg';
+import VerifiedRoundedIcon from '@mui/icons-material/VerifiedRounded';
 
 function ViewManager() {
   const [Managers, setManagers] = useState([]);
@@ -95,7 +96,7 @@ function ViewManager() {
               </StyledTableCell>
               <StyledTableCell align="center">{row.last_name}</StyledTableCell>
               <StyledTableCell align="center">{row.email}</StyledTableCell>
-              <StyledTableCell align="center">{row.isVerified === true ? "Verified" : "Not Verified"}</StyledTableCell>
+              <StyledTableCell align="center">{row.isVerified === true ? <><Button variant='outlined' color='secondary'> <VerifiedRoundedIcon color='info'/> Verified</Button>  </> : "Not Verified"}</StyledTableCell>
               <StyledTableCell align="center"><Button variant='contained' color='info'><SecurityIcon/>{row.role}</Button></StyledTableCell>
               <StyledTableCell align="center"><Button variant="outline" 
                     onClick={() => navigator(`/createuser/${row._id}`)}>Edit&nbsp;<EditIcon/></Button>&nbsp;<Button variant="outline"   onClick={() => handleDelete(row._id)}>Delete&nbsp;<DeleteIcon/></Button></StyledTableCell>
