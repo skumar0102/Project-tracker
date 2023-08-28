@@ -12,7 +12,7 @@ import SideAndNavbar from "./SideandNavbar";
 import FAQ from "./FAQ";
 import TopValues from "./TopValues";
 import EmployeeList from "./EmployeeList";
-import Back from '../../assets/bg1.jpg';
+// import Back from '../../assets/bg1.jpg';
 function index() {
 
   return (
@@ -23,8 +23,8 @@ function index() {
         <Box
           component="main"
           sx={{
-            backgroundColor:"white",
-            backgroundImage : `url(${Back})`,
+            backgroundColor:'#f6f6f6',
+            // backgroundImage : `url(${Back})`,
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",

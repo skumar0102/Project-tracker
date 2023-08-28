@@ -81,6 +81,7 @@ import Back from '../../assets/bg1.jpg';
     <Box
         component="main"
         sx={{
+          backgroundColor:'#f6f6f6',
           // backgroundImage : `url(${Back})`,
           flexGrow: 1,
           height: "100vh",
